@@ -15,6 +15,7 @@ app.use(express.static(__dirname));
 app.set("view engine" , "hbs");
 
 
+const port = process.env.PORT || 3000;
 
 
 
@@ -74,7 +75,7 @@ app.get('/weather.css', function(req, res) {
 
 
 
-app.listen(process.env.PORT || 3000,()=>{
+app.listen(port,()=>{
   console.log(`Example app listening at http://localhost:3000`)
 })
 

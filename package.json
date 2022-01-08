@@ -5,6 +5,7 @@
   "main": "weather.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node weather.js"
   },
   "author": "Shubham Kanojia",
   "license": "ISC",

@@ -30,36 +30,56 @@ app.post('/',(req,res)=>{
       const city = req.body.cityName;
       const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q="+city +"&units=" + unit + "&appid="+apiKey;
-      https.get(url, function(response){
+     
+    
+    
+    https.get(url, function(response){
       //  console.log(response.statusCode);
    
         response.on("data",function(data){
-            const WeatherData = JSON.parse(data);
+          const WeatherData = JSON.parse(data);
           console.log(WeatherData);
-          const temp = WeatherData.main.temp ;
-          const description = WeatherData.weather[0].description;
-          const icon = WeatherData.weather[0].icon;
-          const iconURl =  "http://openweathermap.org/img/wn/"+ WeatherData.weather[0].icon+"@2x.png";
-    
-    
-         /// console.log(temp + "deg C");
-        //  console.log(description);¸
-        console.log(icon);
-        res.render("index",{
-            Lucknow : WeatherData.name,
-            16.99 : temp,
-            link : iconURl,
-            Cloudy :  description,
-            94 : WeatherData.main.humidity,
-            1.54 : WeatherData.wind.speed
-        });
-        // res.write("<p>The weather description in "+req.body.cityName+ " is currently  "+ WeatherData.weather[0].description + "</p>")
-        // res.write("<h1>The temperature in "+ req.body.cityName+" is   " + temp + "<span>&#8451;</span> <h1>");
-    
-        //   res.write("<img src="+ iconURl + ">");
-        //   res.send();
+          if(WeatherData.cod === '404'){
+            res.render("index");
+          }
+          else{
+            const temp = WeatherData.main.temp ;
+            const description = WeatherData.weather[0].description;
+            const icon = WeatherData.weather[0].icon;
+            const iconURl =  "http://openweathermap.org/img/wn/"+ WeatherData.weather[0].icon+"@2x.png";
+      
+      
+           /// console.log(temp + "deg C");
+          //  console.log(description);¸
+              console.log(icon);
+              res.render("index",{
+              Lucknow : WeatherData.name,
+              16.99 : temp,
+              link : iconURl,
+              Cloudy :  description,
+              94 : WeatherData.main.humidity,
+              1.54 : WeatherData.wind.speed
+              });
+          }
         })
+
       });
+
+
+      
+    //   request(url, function (err, response, body) {
+    //     if(err){
+    //       res.render('index', {weather: null, error: 'Error, please try again'});
+    //     } else {
+    //       let weather = JSON.parse(body)
+    //       if(weather.main == undefined){
+    //         res.render('index', {weather: null, error: 'Error, please try again'});
+    //       } else {
+    //         let weatherText = `It's ${weather.main.temp} degrees in ${weather.name}!`;
+    //         res.render('index', {weather: weatherText, error: null});
+    //       }
+    //     }
+    //   });
 })
     
 
